@@ -8,7 +8,7 @@ Operating System: Amazon Linux only. Ubuntu commands such as apt are intentional
 
 Architecture: 8 subnets, CloudFront, Route 53, WAF, ACM, ALB, ASG, Launch Template + app-server AMI, Nginx, private frontend/backend, RDS, Prometheus, Grafana, PagerDuty, CloudWatch, Lambda, S3, SSM, NAT Gateway, VPC Endpoints, Secrets Manager, and a controlled public monitoring proxy.
 
-ARCHITECTURE OF 3-TIRE  E-COMMERCE APPLICATION.
+1. ARCHITECTURE OF 3-TIRE  E-COMMERCE APPLICATION.
 
                             INTERNET
                                │
