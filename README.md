@@ -119,16 +119,13 @@ Follow this order:
 25. Configure ACM
 26. Configure Route 53
 27. Configure WAF
-28. Install Prometheus
-29. Install Grafana
-30. Configure Grafana → Prometheus
-31. Configure monitoring reverse proxy
-32. Configure PagerDuty
-33. Configure CloudWatch
-34. Configure Lambda logging
-35. Create S3 log bucket
-36. Configure SSM
-37. Test complete application
-38. Test monitoring
-39. Test logging
-40. Perform security validation
+28. Install Splunk
+29. Configure monitoring reverse prox
+30. Configure CloudWatch
+31. Configure Lambda logging
+32.  Create S3 log bucket
+33. Configure SSM
+34. Test complete application
+35. Test monitoring
+36.  Test logging
+37. Perform security validation
