@@ -82,3 +82,53 @@ Architecture: 8 subnets, CloudFront, Route 53, WAF, ACM, ALB, ASG, Launch Templa
     |              |               |
  Frontend       Backend        Monitoring
   Servers        Servers        Servers
+
+
+
+---
+
+# 1. Deployment Roadmap
+
+Follow this order:
+
+```text
+01. Prepare AWS account and local workstation
+02. Configure AWS CLI profiles
+03. Create VPC
+04. Create 8 subnets
+05. Create Internet Gateway
+06. Create NAT Gateways
+07. Create route tables
+08. Create VPC endpoints
+09. Create IAM roles
+10. Create Security Groups
+11. Create RDS
+12. Configure Secrets Manager
+13. Create backend server
+14. Connect backend to RDS
+15. Install Flask/Gunicorn
+16. Install and configure Nginx
+17. Create frontend server
+18. Create app-server AMI
+19. Create Launch Template
+20. Create Target Group
+21. Create ALB
+22. Create ASG
+23. Configure health checks and scaling
+24. Create CloudFront
+25. Configure ACM
+26. Configure Route 53
+27. Configure WAF
+28. Install Prometheus
+29. Install Grafana
+30. Configure Grafana → Prometheus
+31. Configure monitoring reverse proxy
+32. Configure PagerDuty
+33. Configure CloudWatch
+34. Configure Lambda logging
+35. Create S3 log bucket
+36. Configure SSM
+37. Test complete application
+38. Test monitoring
+39. Test logging
+40. Perform security validation
