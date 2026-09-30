@@ -55,15 +55,9 @@ Architecture: 8 subnets, CloudFront, Route 53, WAF, ACM, ALB, ASG, Launch Templa
                        |
                      Nginx
                 +------+------+
-                |             |
-                v             v
-             Grafana       Prometheus
-             private        private
-                |
-                v
-            PagerDuty
-
-
+                       |
+                Install Datadog
+                    |
                 LOGGING
                    |
            CloudWatch / Sources
@@ -119,7 +113,7 @@ Follow this order:
 25. Configure ACM
 26. Configure Route 53
 27. Configure WAF
-28. Install Splunk
+28. Install Datadog
 29. Configure monitoring reverse prox
 30. Configure CloudWatch
 31. Configure Lambda logging
