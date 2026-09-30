@@ -1,0 +1,1153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  
+  <meta name="author" content="Veera Sir">
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Veeraops Ecomerse Hasri website</title>
+  <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+  <style>
+    :root {
+      --blue: #2874f0;
+      --deep-blue: #1557d0;
+      --yellow: #ffe500;
+      --ink: #172337;
+      --muted: #667085;
+      --line: #e5e7eb;
+      --soft: #f1f3f6;
+      --white: #fff;
+      --green: #388e3c;
+      font-family: "Google Sans", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--soft); color: var(--ink); }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    .material-symbols-outlined { font-size: 24px; line-height: 1; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: var(--white);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 168px minmax(220px, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      padding: 8px 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--blue);
+    }
+    .brand img { width: 34px; height: 34px; object-fit: contain; }
+    .devops-logo {
+      width: 34px;
+      height: 34px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #2874f0, #34a853);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(40, 116, 240, .22);
+    }
+    .devops-logo .material-symbols-outlined {
+      font-size: 24px;
+      font-variation-settings: "FILL" 0, "wght" 700, "GRAD" 0, "opsz" 24;
+    }
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      height: 44px;
+      padding: 0 14px;
+      border: 2px solid var(--blue);
+      border-radius: 10px;
+      background: #fff;
+    }
+    .search input {
+      border: 0;
+      outline: 0;
+      width: 100%;
+      font-size: 16px;
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      white-space: nowrap;
+    }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 0;
+      background: transparent;
+      color: #111827;
+      cursor: pointer;
+      padding: 8px 4px;
+    }
+    .nav-btn.logged-in {
+      color: var(--blue);
+      font-weight: 700;
+    }
+    .cart-count {
+      min-width: 20px;
+      height: 20px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 999px;
+      background: var(--yellow);
+      color: #111827;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 10px 16px 40px;
+    }
+    .welcome-strip {
+      margin: 0 0 12px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #2874f0, #34a853);
+      color: #fff;
+      font-size: 18px;
+      font-weight: 800;
+      box-shadow: 0 10px 24px rgba(40, 116, 240, .18);
+    }
+    .project-card {
+      margin: 0 0 14px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--line);
+      color: #172337;
+      font-size: 15px;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, .06);
+    }
+    .project-card span {
+      color: var(--blue);
+    }
+    .category-rail {
+      display: grid;
+      grid-template-columns: repeat(10, minmax(78px, 1fr));
+      gap: 6px;
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+      overflow-x: auto;
+      padding: 12px 8px 0;
+    }
+    .category {
+      min-width: 82px;
+      display: grid;
+      justify-items: center;
+      gap: 5px;
+      padding: 0 4px 10px;
+      border-bottom: 4px solid transparent;
+      border-top: 0;
+      border-left: 0;
+      border-right: 0;
+      font-size: 13px;
+      font-weight: 500;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+    }
+    .category:hover, .category.active { color: var(--blue); border-color: var(--blue); }
+    .cat-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: #fff8c5;
+      border: 1px solid #e6d756;
+      color: #172337;
+    }
+    .cat-label {
+      max-width: 86px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .banner-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1.1fr .8fr;
+      gap: 32px;
+      margin-top: 16px;
+      overflow: hidden;
+    }
+    .banner {
+      min-height: 176px;
+      border-radius: 10px;
+      background: #111827;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding: 22px;
+    }
+    .banner img {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 48%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .banner-content { max-width: 58%; position: relative; z-index: 1; }
+    .banner h2 { margin: 0 0 8px; font-size: 26px; line-height: 1.12; }
+    .banner p { margin: 0 0 14px; color: rgba(255,255,255,.84); }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 4px;
+      padding: 5px 8px;
+      background: var(--yellow);
+      color: #111827;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .banner.gold { background: linear-gradient(120deg, #7a4a13, #d89a35); }
+    .banner.red { background: linear-gradient(120deg, #e13027, #ff7a38); }
+
+    .deal-band {
+      margin-top: 28px;
+      background: linear-gradient(90deg, var(--blue), #0b55f5);
+      border-radius: 12px;
+      padding: 12px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .deal-band h2 { margin: 4px 4px 10px; font-size: 22px; }
+    .product-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      background: white;
+      border-radius: 8px;
+      padding: 8px;
+    }
+    .product-card {
+      color: #111827;
+      background: #fff;
+      border-radius: 6px;
+      border: 1px solid #eef0f4;
+      overflow: hidden;
+      min-height: 244px;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: contain;
+      background: #f7f7f7;
+      padding: 10px;
+    }
+    .product-info { padding: 10px; display: grid; gap: 4px; flex: 1; }
+    .product-title { font-weight: 600; }
+    .product-sub { font-size: 13px; color: var(--muted); }
+    .price { font-weight: 800; color: #111827; }
+    .deal { color: var(--green); font-weight: 700; font-size: 14px; }
+    .add-btn {
+      width: 100%;
+      border: 0;
+      background: var(--yellow);
+      color: #111827;
+      padding: 9px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .services {
+      margin-top: 24px;
+      background: #fff;
+      border-radius: 10px;
+      padding: 18px;
+    }
+    .services h2 { margin: 0 0 14px; font-size: 22px; }
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 10px;
+    }
+    .service-card {
+      display: grid;
+      place-items: center;
+      min-height: 96px;
+      padding: 10px;
+      text-align: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-weight: 700;
+      color: #111827;
+      background: #fff;
+      cursor: pointer;
+    }
+    .service-card .material-symbols-outlined { color: var(--blue); margin-bottom: 6px; }
+
+    .drawer {
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: min(420px, 100vw);
+      height: 100vh;
+      background: #fff;
+      z-index: 40;
+      box-shadow: -10px 0 35px rgba(15,23,42,.22);
+      transform: translateX(110%);
+      transition: transform .25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .drawer.open { transform: translateX(0); }
+    .drawer-header, .drawer-footer {
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .drawer-footer { border-top: 1px solid var(--line); border-bottom: 0; display: grid; gap: 12px; }
+    .cart-items { padding: 12px 16px; overflow: auto; flex: 1; }
+    .cart-item {
+      display: grid;
+      grid-template-columns: 64px 1fr auto;
+      gap: 10px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .cart-item img { width: 64px; height: 64px; object-fit: contain; background: #f7f7f7; border-radius: 6px; }
+    .qty { display: inline-flex; align-items: center; gap: 8px; margin-top: 8px; }
+    .qty button, .icon-only { border: 1px solid var(--line); background: #fff; border-radius: 6px; cursor: pointer; }
+    .total-row { display: flex; justify-content: space-between; font-weight: 800; font-size: 18px; }
+    .checkout { border: 0; border-radius: 6px; background: #fb641b; color: #fff; padding: 12px; font-weight: 800; cursor: pointer; }
+    .status { min-height: 20px; color: var(--green); font-size: 14px; }
+
+    .auth-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,.45);
+      z-index: 50;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+    .auth-modal.open { display: flex; }
+    .auth-card { width: min(460px, 100%); background: #fff; border-radius: 10px; padding: 22px; box-shadow: 0 24px 70px rgba(15,23,42,.22); }
+    .auth-head { display:flex; justify-content:space-between; align-items:flex-start; gap:14px; margin-bottom:14px; }
+    .auth-head h2 { margin:0; font-size:24px; }
+    .auth-head p { margin:4px 0 0; color:var(--muted); font-size:14px; }
+    .auth-tabs { display:grid; grid-template-columns:1fr 1fr; gap:6px; padding:4px; border:1px solid var(--line); border-radius:8px; background:#f8fafc; margin-bottom:14px; }
+    .auth-tab { border:0; border-radius:6px; background:transparent; color:#475467; padding:10px; font-weight:800; cursor:pointer; }
+    .auth-tab.active { background:#fff; color:var(--blue); box-shadow:0 4px 14px rgba(15,23,42,.08); }
+    .auth-panel { display:none; }
+    .auth-panel.active { display:block; }
+    .form-grid { display: grid; gap: 10px; }
+    .form-grid input { border: 1px solid var(--line); border-radius: 6px; padding: 11px; }
+    .form-grid input:focus { border-color:var(--blue); outline:3px solid rgba(40,116,240,.15); }
+    .form-grid button { border: 0; border-radius: 6px; padding: 11px; background: var(--blue); color: #fff; font-weight: 700; cursor: pointer; }
+    .form-grid button.secondary { background:#eef4ff; color:var(--blue); }
+    .auth-note { color:var(--muted); font-size:13px; line-height:1.45; }
+    .payment-options { display:grid; gap:10px; margin:14px 0; }
+    .payment-option {
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:#fff;
+      padding:12px 14px;
+      text-align:left;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .payment-option.active { border-color:var(--blue); background:#eef4ff; }
+    .payment-summary {
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:#f8fafc;
+      padding:12px 14px;
+      display:grid;
+      gap:6px;
+      margin-bottom:12px;
+    }
+
+    @media (max-width: 900px) {
+      .topbar-inner { grid-template-columns: 1fr; gap: 10px; }
+      .nav-actions { justify-content: space-between; }
+      .banner-grid { grid-template-columns: 1fr; gap: 12px; }
+      .product-row { grid-template-columns: repeat(2, 1fr); }
+      .service-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 520px) {
+      .product-row, .service-grid { grid-template-columns: repeat(2, 1fr); }
+      .banner-content { max-width: 70%; }
+      .banner img { width: 42%; opacity: .9; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    
+  <meta name="author" content="Veera Sir">
+<div class="topbar-inner">
+      <a href="/" class="brand">
+        <span class="devops-logo" aria-label="DevOps logo">
+          <span class="material-symbols-outlined">all_inclusive</span>
+        </span>
+        <span>DevOps Store</span>
+      </a>
+      <label class="search">
+        <span class="material-symbols-outlined">search</span>
+        <input id="searchInput" type="search" placeholder="Search for Products, harsi and more">
+      </label>
+      <nav class="nav-actions">
+        <button class="nav-btn" id="loginBtn"><span class="material-symbols-outlined">account_circle</span><span id="loginLabel">Login</span></button>
+        <button class="nav-btn" id="signupBtn"><span class="material-symbols-outlined">person_add</span>Sign up</button>
+        <button class="nav-btn" id="logoutBtn" style="display:none"><span class="material-symbols-outlined">logout</span>Logout</button>
+        <button class="nav-btn" id="ordersBtn"><span class="material-symbols-outlined">receipt_long</span>Orders</button>
+        <button class="nav-btn" id="cartBtn"><span class="material-symbols-outlined">shopping_cart</span>Cart <span class="cart-count" id="cartCount">0</span></button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="welcome-strip">Hi, welcome to Multicloud DevOps with AI Mlops by Veera Sir Naresh IT</div>
+    <div class="project-card"><span>Project:</span> kubernetes-veeraops-ecommerce-microservices-app</div>
+    <section class="category-rail" aria-label="Categories">
+      <a class="category active" href="/"><span class="cat-icon material-symbols-outlined">storefront</span><span class="cat-label">For You</span></a>
+      <a class="category" href="/googleclothes" data-auth-required="true"><span class="cat-icon material-symbols-outlined">checkroom</span><span class="cat-label">Fashion</span></a>
+      <a class="category" href="/phones" data-auth-required="true"><span class="cat-icon material-symbols-outlined">smartphone</span><span class="cat-label">Mobiles</span></a>
+      <a class="category" href="/earphones" data-auth-required="true"><span class="cat-icon material-symbols-outlined">headphones</span><span class="cat-label">Audio</span></a>
+      <a class="category" href="/electronics" data-auth-required="true"><span class="cat-icon material-symbols-outlined">devices</span><span class="cat-label">Electronics</span></a>
+      <a class="category" href="/computers" data-auth-required="true"><span class="cat-icon material-symbols-outlined">laptop_mac</span><span class="cat-label">Computers</span></a>
+      <a class="category" href="/googlegrocery" data-auth-required="true"><span class="cat-icon material-symbols-outlined">grocery</span><span class="cat-label">Grocery</span></a>
+      <a class="category" href="/googlemusic" data-auth-required="true"><span class="cat-icon material-symbols-outlined">music_note</span><span class="cat-label">Music</span></a>
+      <button class="category" id="historyRailBtn" type="button"><span class="cat-icon material-symbols-outlined">receipt_long</span><span class="cat-label">Orders</span></button>
+      <a class="category" href="/electronics" data-auth-required="true"><span class="cat-icon material-symbols-outlined">chair</span><span class="cat-label">Home</span></a>
+    </section>
+
+    <section class="banner-grid">
+      <article class="banner">
+        <div class="banner-content">
+          <span class="badge">SASA LELE</span>
+          <h2>Up to 58% higher FPS</h2>
+          <p>Intel powered gaming laptops and creator machines.</p>
+        </div>
+        <img src="https://www.principledtechnologies.com/benchmarkxprt/spotlight/wp-content/uploads/2019/11/Google-Pixelbook-Go_Face.png" alt="Laptop offer">
+      </article>
+      <article class="banner gold">
+        <div class="banner-content">
+          <span class="badge">LIVE TODAY</span>
+          <h2>Galaxy S25 livestream</h2>
+          <p>8 hour limited deal with card offers.</p>
+        </div>
+        <img src="https://images.samsung.com/is/image/samsung/p6pim/in/sm-s938bzbcins/gallery/in-galaxy-s25-s938-sm-s938bzbcins-thumb-544704736" alt="Phone offer">
+      </article>
+      <article class="banner red">
+        <div class="banner-content">
+          <span class="badge">EARLY ACCESS</span>
+          <h2>Acer Swift Neo OLED</h2>
+          <p>Starts ₹52,990 with instant discount.</p>
+        </div>
+        <img src="https://static-ecapac.acer.com/media/catalog/product/a/c/acer-swift-go-14-sfg14-73-oled-silver-01.png" alt="Acer laptop">
+      </article>
+    </section>
+
+    <section class="deal-band">
+      <h2>Grab or gone</h2>
+      <div class="product-row" id="grabProducts"></div>
+    </section>
+
+    <section class="deal-band">
+      <h2>Popular picks</h2>
+      <div class="product-row" id="popularProducts"></div>
+    </section>
+
+    <section class="services">
+      <h2>Current services</h2>
+      <div class="service-grid">
+        <a class="service-card" href="/phones" data-auth-required="true"><span class="material-symbols-outlined">smartphone</span>Phones</a>
+        <a class="service-card" href="/electronics" data-auth-required="true"><span class="material-symbols-outlined">devices</span>Electronics</a>
+        <a class="service-card" href="/computers" data-auth-required="true"><span class="material-symbols-outlined">laptop_mac</span>Computers</a>
+        <a class="service-card" href="/earphones" data-auth-required="true"><span class="material-symbols-outlined">headphones</span>Earphones</a>
+        <a class="service-card" href="/googleclothes" data-auth-required="true"><span class="material-symbols-outlined">checkroom</span>Fashion</a>
+        <a class="service-card" href="/googlegrocery" data-auth-required="true"><span class="material-symbols-outlined">local_mall</span>Grocery</a>
+        <a class="service-card" href="/googlemusic" data-auth-required="true"><span class="material-symbols-outlined">library_music</span>Music</a>
+        <button class="service-card" id="historyServiceBtn" type="button"><span class="material-symbols-outlined">receipt_long</span>Orders & History</button>
+      </div>
+    </section>
+    <section class="services" id="historySection">
+      <h2>My orders and payments</h2>
+      <div class="service-grid" style="grid-template-columns:repeat(2,minmax(0,1fr));align-items:start">
+        <div class="service-card" style="display:block;text-align:left;min-height:220px">
+          <h3 style="margin:0 0 10px;font-size:18px">Orders</h3>
+          <div id="ordersList" class="auth-note">Login to see your order history.</div>
+        </div>
+        <div class="service-card" style="display:block;text-align:left;min-height:220px">
+          <h3 style="margin:0 0 10px;font-size:18px">Payments</h3>
+          <div id="paymentsList" class="auth-note">Payment records will show here.</div>
+        </div>
+        <div class="service-card" style="display:block;text-align:left;min-height:220px">
+          <h3 style="margin:0 0 10px;font-size:18px">Recharges</h3>
+          <div id="rechargesList" class="auth-note">Recharge history will show here.</div>
+        </div>
+        <div class="service-card" style="display:block;text-align:left;min-height:220px">
+          <h3 style="margin:0 0 10px;font-size:18px">Services opened</h3>
+          <div id="servicesList" class="auth-note">Visited services will show here.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <aside class="drawer" id="cartDrawer" aria-hidden="true">
+    <div class="drawer-header">
+      <strong>Your Cart</strong>
+      <button class="icon-only" id="closeCart" aria-label="Close cart"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="drawer-footer">
+      <div class="total-row"><span>Total</span><span id="cartTotal">₹0</span></div>
+      <button class="checkout" id="checkoutBtn">Place Order</button>
+      <button class="nav-btn" id="emptyCart"><span class="material-symbols-outlined">delete</span>Empty cart</button>
+      <div class="status" id="cartStatus"></div>
+    </div>
+  </aside>
+
+  <div class="auth-modal" id="authModal">
+    <div class="auth-card">
+      <div class="auth-head">
+        <div>
+          <h2 id="authTitle">Login</h2>
+          <p id="authSubtitle">Use your password first, then verify the email OTP.</p>
+        </div>
+        <button class="icon-only" id="closeAuth"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="auth-tabs" role="tablist" aria-label="Account forms">
+        <button class="auth-tab active" id="loginTab" type="button">Login</button>
+        <button class="auth-tab" id="signupTab" type="button">Sign up</button>
+      </div>
+      <div class="auth-panel active" id="loginPanel">
+        <div class="form-grid">
+          <input id="loginEmail" type="email" placeholder="Email">
+          <input id="loginPassword" type="password" placeholder="Password">
+          <input id="loginOtp" type="text" inputmode="numeric" maxlength="6" placeholder="Login OTP" style="display:none">
+          <button id="loginSubmit">Send login OTP</button>
+          <button id="verifyLoginSubmit" type="button" style="display:none">Verify and login</button>
+          <div class="auth-note">For first login of the day, an OTP will be sent to your registered email.</div>
+        </div>
+      </div>
+      <div class="auth-panel" id="signupPanel">
+        <div class="form-grid">
+          <input id="signupFullName" type="text" placeholder="Full name">
+          <input id="signupEmail" type="email" placeholder="Email">
+          <input id="signupPassword" type="password" placeholder="Password">
+          <input id="signupOtp" type="text" inputmode="numeric" maxlength="6" placeholder="Signup OTP" style="display:none">
+          <button id="signupSubmit" type="button">Create account and send OTP</button>
+          <button id="verifySignupSubmit" class="secondary" type="button" style="display:none">Verify and create account</button>
+          <div class="auth-note">Password needs uppercase, lowercase, number, special character, and 8 characters.</div>
+        </div>
+      </div>
+      <div class="status" id="authStatus"></div>
+    </div>
+  </div>
+
+  <div class="auth-modal" id="paymentModal">
+    <div class="auth-card">
+      <div class="auth-head">
+        <div>
+          <h2>Choose payment</h2>
+          <p>Complete payment first, then we will place the order and send the receipt email.</p>
+        </div>
+        <button class="icon-only" id="closePayment"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="payment-summary">
+        <strong id="paymentUserName">Customer</strong>
+        <div class="auth-note" id="paymentUserEmail">Email</div>
+        <div class="total-row"><span>Total to pay</span><span id="paymentTotal">Rs 0</span></div>
+      </div>
+      <div class="payment-options">
+        <button class="payment-option active" type="button" data-payment-method="UPI">
+          <span><strong>UPI</strong><br><span class="auth-note">Google Pay, PhonePe, Paytm</span></span>
+          <span class="material-symbols-outlined">qr_code_2</span>
+        </button>
+        <button class="payment-option" type="button" data-payment-method="Card">
+          <span><strong>Card</strong><br><span class="auth-note">Credit or debit card</span></span>
+          <span class="material-symbols-outlined">credit_card</span>
+        </button>
+        <button class="payment-option" type="button" data-payment-method="Net Banking">
+          <span><strong>Net Banking</strong><br><span class="auth-note">Pay from your bank</span></span>
+          <span class="material-symbols-outlined">account_balance</span>
+        </button>
+      </div>
+      <div class="form-grid">
+        <input id="paymentAddress" type="text" placeholder="Delivery address">
+        <input id="paymentPhone" type="tel" placeholder="Phone number">
+        <button id="confirmPaymentBtn" type="button">Pay now and place order</button>
+      </div>
+      <div class="status" id="paymentStatus"></div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = '/api';
+    const USER_KEY = 'googleStoreUser';
+    const PENDING_AUTH_EMAIL_KEY = 'googleStorePendingAuthEmail';
+
+    const products = [
+      { id: 'home-buds', name: 'Neckband Earphones', price: 1299, image: 'https://cdn.tmobile.com/content/dam/t-mobile/en-p/accessories/840244604554/840244604554-frontimage.png', sub: 'Widest Range', deal: 'Up to 90% Off' },
+      { id: 'home-watch', name: 'Classic Digital Watch', price: 2199, image: 'https://m.media-amazon.com/images/I/61ybeKQto8L._AC_UY1000_.jpg', sub: 'Top Offers', deal: 'Up to 10% Off' },
+      { id: 'home-cars', name: 'Mini Racing Cars', price: 799, image: 'https://5.imimg.com/data5/SELLER/Default/2025/7/529541600/CA/PV/XO/240648152/26-1000x1000.jpg', sub: 'Popular', deal: 'Top Rated' },
+      { id: 'home-dryfruit', name: 'Premium Dry Fruits', price: 999, image: 'https://tse3.mm.bing.net/th/id/OIP.qq15sTtaZ_LzPWs878W50AHaJ4?pid=Api&P=0&h=180', sub: 'Top Deals', deal: 'Top Rated' },
+      { id: 'home-pixel10', name: 'Pixel 10 Pro', price: 99800, image: 'https://www.lesmobiles.com/upload/media/Google_Pixel-10-Pro-concept_intro.jpg', sub: 'AI camera phone', deal: 'Bank Offer' },
+      { id: 'home-pixelbook', name: 'Pixelbook Go', price: 84999, image: 'https://www.principledtechnologies.com/benchmarkxprt/spotlight/wp-content/uploads/2019/11/Google-Pixelbook-Go_Face.png', sub: 'Chromebook', deal: 'Hot Deal' },
+      { id: 'home-nest', name: 'Nest Audio', price: 8999, image: 'https://static1.xdaimages.com/wordpress/wp-content/uploads/2023/03/google-nest-audio-on-transparent-background.png', sub: 'Smart speaker', deal: 'Free Delivery' },
+      { id: 'home-fashion', name: 'Fashion Essentials', price: 1499, image: 'https://cdn-icons-png.flaticon.com/512/3205/3205438.png', sub: 'Fresh styles', deal: 'New Season' }
+    ];
+
+    let cart = {};
+    let historyLoadedForEmail = '';
+    let selectedPaymentMethod = 'UPI';
+    const fmt = value => '₹' + Number(value || 0).toLocaleString('en-IN');
+    const byId = id => products.find(product => product.id === id);
+
+    function getCurrentUser() {
+      try {
+        return JSON.parse(localStorage.getItem(USER_KEY) || 'null');
+      } catch (e) {}
+      return null;
+    }
+    function getDisplayName(user = getCurrentUser()) {
+      if (!user) return 'Customer';
+      return user.full_name || user.username || user.email || 'Customer';
+    }
+    function requireUser() {
+      const user = getCurrentUser();
+      if (!user || !user.email) throw new Error('Please login with email OTP first.');
+      return user;
+    }
+    function userQuery() { return new URLSearchParams({ email: requireUser().email }).toString(); }
+    function resetCartState() {
+      cart = {};
+      renderCart();
+    }
+    function clearAuthForms() {
+      ['loginEmail', 'loginPassword', 'loginOtp', 'signupFullName', 'signupEmail', 'signupPassword', 'signupOtp'].forEach(id => {
+        const node = document.getElementById(id);
+        if (node) node.value = '';
+      });
+      document.getElementById('loginOtp').style.display = 'none';
+      document.getElementById('signupOtp').style.display = 'none';
+      document.getElementById('verifyLoginSubmit').style.display = 'none';
+      document.getElementById('verifySignupSubmit').style.display = 'none';
+      document.getElementById('authStatus').textContent = '';
+    }
+    function setPaymentMethod(method) {
+      selectedPaymentMethod = method;
+      document.querySelectorAll('[data-payment-method]').forEach(button => {
+        button.classList.toggle('active', button.dataset.paymentMethod === method);
+      });
+    }
+    function openPaymentModal() {
+      if (!Object.keys(cart).length) {
+        setStatus('Add items before payment.');
+        return;
+      }
+      const user = requireUser();
+      document.getElementById('paymentUserName').textContent = getDisplayName(user);
+      document.getElementById('paymentUserEmail').textContent = user.email;
+      document.getElementById('paymentAddress').value = user.address || '';
+      document.getElementById('paymentPhone').value = user.phone || '';
+      document.getElementById('paymentTotal').textContent = document.getElementById('cartTotal').textContent;
+      document.getElementById('paymentStatus').textContent = '';
+      setPaymentMethod(selectedPaymentMethod);
+      document.getElementById('paymentModal').classList.add('open');
+    }
+    function closePaymentModal() {
+      document.getElementById('paymentModal').classList.remove('open');
+      document.getElementById('paymentStatus').textContent = '';
+    }
+    function renderHistoryGroup(targetId, items, renderItem, emptyText) {
+      const target = document.getElementById(targetId);
+      if (!items || !items.length) {
+        target.innerHTML = `<div class="auth-note">${emptyText}</div>`;
+        return;
+      }
+      target.innerHTML = items.map(renderItem).join('');
+    }
+    function renderOrderItems(items) {
+      if (!items || !items.length) return '<div class="auth-note">No items saved.</div>';
+      return items.map(item => `
+        <div class="auth-note" style="margin-top:6px">
+          ${item.product_name} x ${item.quantity} - ${fmt(item.subtotal || (item.price * item.quantity))}
+        </div>
+      `).join('');
+    }
+    async function loadHistory(force = false) {
+      const user = getCurrentUser();
+      if (!user || !user.email) {
+        historyLoadedForEmail = '';
+        renderHistoryGroup('ordersList', [], () => '', 'Login to see your order history.');
+        renderHistoryGroup('paymentsList', [], () => '', 'Payment records will show here.');
+        renderHistoryGroup('rechargesList', [], () => '', 'Recharge history will show here.');
+        renderHistoryGroup('servicesList', [], () => '', 'Visited services will show here.');
+        return;
+      }
+      if (!force && historyLoadedForEmail === user.email) return;
+      const res = await fetch(`${API_BASE}/history?${new URLSearchParams({ email: user.email })}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Unable to load history');
+      historyLoadedForEmail = user.email;
+      renderHistoryGroup('ordersList', data.orders || [], order => `
+        <div style="padding:10px 0;border-top:1px solid var(--line)">
+          <strong>Order #${order.id}</strong>
+          <div class="auth-note">${order.status} | ${fmt(order.total_amount)} | ${new Date(order.created_at).toLocaleString()}</div>
+          ${renderOrderItems(order.items)}
+        </div>
+      `, 'No orders yet.');
+      renderHistoryGroup('paymentsList', data.payments || [], payment => `
+        <div style="padding:10px 0;border-top:1px solid var(--line)">
+          <strong>${payment.payment_method}</strong>
+          <div class="auth-note">${payment.status} | ${fmt(payment.amount)} | ${new Date(payment.created_at).toLocaleString()}</div>
+          <div class="auth-note">Reference: ${payment.transaction_reference || 'Not provided'}</div>
+        </div>
+      `, 'No payments yet.');
+      renderHistoryGroup('rechargesList', data.recharges || [], recharge => `
+        <div style="padding:10px 0;border-top:1px solid var(--line)">
+          <strong>${recharge.operator_name}</strong>
+          <div class="auth-note">${recharge.mobile_number} | ${fmt(recharge.amount)} | ${new Date(recharge.created_at).toLocaleString()}</div>
+          <div class="auth-note">${recharge.status}</div>
+        </div>
+      `, 'No recharges yet.');
+      renderHistoryGroup('servicesList', data.service_activity || [], activity => `
+        <div style="padding:10px 0;border-top:1px solid var(--line)">
+          <strong>${activity.service_name}</strong>
+          <div class="auth-note">${activity.activity_type} | ${new Date(activity.created_at).toLocaleString()}</div>
+        </div>
+      `, 'No services opened yet.');
+    }
+    function showHistorySection() {
+      document.getElementById('historySection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      loadHistory(true).catch(err => {
+        document.getElementById('ordersList').innerHTML = `<div class="auth-note">${err.message}</div>`;
+      });
+    }
+    async function saveServiceActivity(servicePath) {
+      const user = getCurrentUser();
+      if (!user || !user.email) return;
+      try {
+        await fetch(`${API_BASE}/service-activity`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: user.email,
+            service_name: servicePath.replace('/', '') || 'home',
+            service_path: servicePath,
+            activity_type: 'open'
+          })
+        });
+      } catch (e) {}
+    }
+    function redirectToService(servicePath) {
+      saveServiceActivity(servicePath).finally(() => {
+        window.location.href = servicePath;
+      });
+    }
+    function ensureLoggedInForService(servicePath) {
+      const user = getCurrentUser();
+      if (!user || !user.email) {
+        document.getElementById('authStatus').textContent = 'Please login or sign up before opening services.';
+        openAuth('login');
+        return false;
+      }
+      redirectToService(servicePath);
+      return true;
+    }
+    function logout() {
+      localStorage.removeItem(USER_KEY);
+      localStorage.removeItem(PENDING_AUTH_EMAIL_KEY);
+      historyLoadedForEmail = '';
+      document.getElementById('loginBtn').classList.remove('logged-in');
+      document.getElementById('loginLabel').textContent = 'Login';
+      document.getElementById('signupBtn').style.display = '';
+      document.getElementById('logoutBtn').style.display = 'none';
+      clearAuthForms();
+      resetCartState();
+      loadHistory().catch(() => {});
+    }
+
+    function renderProducts(targetId, list) {
+      const target = document.getElementById(targetId);
+      target.innerHTML = list.map(product => `
+        <article class="product-card">
+          <img src="${product.image}" alt="${product.name}" loading="lazy">
+          <div class="product-info">
+            <div class="product-sub">${product.sub}</div>
+            <div class="product-title">${product.name}</div>
+            <div class="deal">${product.deal}</div>
+            <div class="price">${fmt(product.price)}</div>
+          </div>
+          <button class="add-btn" data-add="${product.id}">Add to Cart</button>
+        </article>
+      `).join('');
+    }
+
+    function renderCart() {
+      const ids = Object.keys(cart);
+      const cartItems = document.getElementById('cartItems');
+      let total = 0;
+      if (!ids.length) {
+        cartItems.innerHTML = '<p style="color:#667085">Your cart is empty.</p>';
+      } else {
+        cartItems.innerHTML = ids.map(id => {
+          const product = byId(id);
+          if (!product) return '';
+          const qty = cart[id];
+          total += product.price * qty;
+          return `
+            <div class="cart-item">
+              <img src="${product.image}" alt="${product.name}">
+              <div>
+                <strong>${product.name}</strong>
+                <div class="price">${fmt(product.price * qty)}</div>
+                <div class="qty">
+                  <button data-dec="${id}">-</button>
+                  <span>${qty}</span>
+                  <button data-inc="${id}">+</button>
+                </div>
+              </div>
+              <button class="icon-only" data-remove="${id}" aria-label="Remove"><span class="material-symbols-outlined">delete</span></button>
+            </div>
+          `;
+        }).join('');
+      }
+      document.getElementById('cartCount').textContent = Object.values(cart).reduce((sum, qty) => sum + qty, 0);
+      document.getElementById('cartTotal').textContent = fmt(total);
+      cartItems.querySelectorAll('[data-inc]').forEach(btn => btn.onclick = () => changeQty(btn.dataset.inc, cart[btn.dataset.inc] + 1));
+      cartItems.querySelectorAll('[data-dec]').forEach(btn => btn.onclick = () => changeQty(btn.dataset.dec, cart[btn.dataset.dec] - 1));
+      cartItems.querySelectorAll('[data-remove]').forEach(btn => btn.onclick = () => removeFromCart(btn.dataset.remove));
+    }
+
+    async function saveCartItem(id) {
+      const product = byId(id);
+      if (!product || !cart[id]) return;
+      await fetch(`${API_BASE}/cart/items`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: requireUser().email,
+          product_id: product.id,
+          product_name: product.name,
+          product_image: product.image,
+          product_description: product.sub,
+          price: product.price,
+          quantity: 1
+        })
+      });
+    }
+    async function deleteCartItem(id) {
+      await fetch(`${API_BASE}/cart/items`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: requireUser().email, product_id: id })
+      });
+    }
+    async function updateCartItem(id) {
+      await fetch(`${API_BASE}/cart/items`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: requireUser().email, product_id: id, quantity: cart[id] || 0 })
+      });
+    }
+    async function clearCartInDb() {
+      await Promise.all(Object.keys(cart).map(id => deleteCartItem(id)));
+    }
+    async function loadCart() {
+      try {
+        const user = getCurrentUser();
+        if (!user || !user.email) return renderCart();
+        const res = await fetch(`${API_BASE}/cart?${new URLSearchParams({ email: user.email })}`);
+        const data = await res.json();
+        cart = {};
+        (data.items || []).forEach(item => cart[item.product_id] = Number(item.quantity) || 1);
+        renderCart();
+      } catch (e) {
+        renderCart();
+      }
+    }
+    function addToCart(id) {
+      try { requireUser(); } catch (err) { setStatus(err.message); openAuth('login'); return; }
+      cart[id] = (cart[id] || 0) + 1;
+      renderCart();
+      saveCartItem(id).catch(() => setStatus('Cart saved locally. Backend not reachable.'));
+    }
+    function changeQty(id, qty) {
+      if (qty <= 0) return removeFromCart(id);
+      cart[id] = qty;
+      renderCart();
+      updateCartItem(id).catch(() => setStatus('Cart saved locally. Backend not reachable.'));
+    }
+    function removeFromCart(id) {
+      delete cart[id];
+      renderCart();
+      deleteCartItem(id).catch(() => setStatus('Item removed locally. Backend not reachable.'));
+    }
+    function setStatus(text) {
+      document.getElementById('cartStatus').textContent = text;
+      setTimeout(() => document.getElementById('cartStatus').textContent = '', 8000);
+    }
+    function setAuthMode(mode) {
+      const isSignup = mode === 'signup';
+      document.getElementById('loginTab').classList.toggle('active', !isSignup);
+      document.getElementById('signupTab').classList.toggle('active', isSignup);
+      document.getElementById('loginPanel').classList.toggle('active', !isSignup);
+      document.getElementById('signupPanel').classList.toggle('active', isSignup);
+      document.getElementById('authTitle').textContent = isSignup ? 'Create account' : 'Login';
+      document.getElementById('authSubtitle').textContent = isSignup
+        ? 'Create your account, then verify the signup OTP from email.'
+        : 'Use your password first, then verify the email OTP.';
+      document.getElementById('authStatus').textContent = '';
+    }
+    function openAuth(mode = 'login') {
+      setAuthMode(mode);
+      document.getElementById('authModal').classList.add('open');
+      setTimeout(() => {
+        const focusTarget = mode === 'signup' ? document.getElementById('signupFullName') : document.getElementById('loginEmail');
+        if (focusTarget) focusTarget.focus();
+      }, 50);
+    }
+    async function placeOrder(paymentMethod = selectedPaymentMethod) {
+      if (!Object.keys(cart).length) return setStatus('Add items before placing order.');
+      const user = requireUser();
+      const shippingAddress = document.getElementById('paymentAddress').value.trim() || user.address || 'Address not provided';
+      const shippingPhone = document.getElementById('paymentPhone').value.trim() || user.phone || '';
+      const res = await fetch(`${API_BASE}/orders`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: user.email,
+          shipping_name: getDisplayName(user),
+          shipping_address: shippingAddress,
+          shipping_phone: shippingPhone,
+          payment_method: paymentMethod,
+          payment_status: 'paid',
+          transaction_reference: `${paymentMethod.replace(/\s+/g, '-')}-${Date.now()}`,
+          payment_notes: `Paid from Store home page via ${paymentMethod}`
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Order failed');
+      cart = {};
+      renderCart();
+      setStatus(`Order #${data.order_id} placed. ${data.email_message || 'Receipt email updated.'}`);
+      document.getElementById('paymentStatus').textContent = data.email_message || 'Payment done and order placed.';
+      historyLoadedForEmail = '';
+      loadHistory(true).catch(() => {});
+      closePaymentModal();
+    }
+
+    function loadUser() {
+      try {
+        const user = getCurrentUser();
+        if (user && user.email) {
+          document.getElementById('loginBtn').classList.add('logged-in');
+          document.getElementById('loginLabel').textContent = getDisplayName(user);
+          document.getElementById('signupBtn').style.display = 'none';
+          document.getElementById('logoutBtn').style.display = '';
+        } else {
+          document.getElementById('loginBtn').classList.remove('logged-in');
+          document.getElementById('loginLabel').textContent = 'Login';
+          document.getElementById('signupBtn').style.display = '';
+          document.getElementById('logoutBtn').style.display = 'none';
+        }
+      } catch (e) {}
+    }
+    async function login() {
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+      const authStatus = document.getElementById('authStatus');
+      const res = await fetch(`${API_BASE}/login/request`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        authStatus.textContent = data.error || 'Login failed';
+        return;
+      }
+      if (data.otp_required === false && data.user) {
+        finishAuth(data.user);
+        return;
+      }
+      localStorage.setItem(PENDING_AUTH_EMAIL_KEY, email);
+      document.getElementById('loginOtp').style.display = '';
+      document.getElementById('verifyLoginSubmit').style.display = '';
+      authStatus.textContent = data.message || 'Login OTP sent to your email.';
+    }
+    async function signup() {
+      const email = document.getElementById('signupEmail').value.trim();
+      const password = document.getElementById('signupPassword').value.trim();
+      const fullName = document.getElementById('signupFullName').value.trim();
+      const username = (email.split('@')[0] || 'customer').replace(/[^a-zA-Z0-9_]/g, '_');
+      const authStatus = document.getElementById('authStatus');
+      const res = await fetch(`${API_BASE}/signup/request`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, full_name: fullName || username, email, password })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        authStatus.textContent = data.error || 'Signup failed';
+        return;
+      }
+      localStorage.setItem(PENDING_AUTH_EMAIL_KEY, email);
+      document.getElementById('signupOtp').style.display = '';
+      document.getElementById('verifySignupSubmit').style.display = '';
+      authStatus.textContent = data.message || 'Signup OTP sent to your email.';
+    }
+    async function verifyLoginOtp() {
+      const email = localStorage.getItem(PENDING_AUTH_EMAIL_KEY) || document.getElementById('loginEmail').value.trim();
+      const otp = document.getElementById('loginOtp').value.trim();
+      const res = await fetch(`${API_BASE}/login/verify`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp })
+      });
+      const data = await res.json();
+      if (!res.ok) return document.getElementById('authStatus').textContent = data.error || 'OTP verification failed';
+      finishAuth(data.user);
+    }
+    async function verifySignupOtp() {
+      const email = localStorage.getItem(PENDING_AUTH_EMAIL_KEY) || document.getElementById('signupEmail').value.trim();
+      const otp = document.getElementById('signupOtp').value.trim();
+      const res = await fetch(`${API_BASE}/signup/verify`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp })
+      });
+      const data = await res.json();
+      if (!res.ok) return document.getElementById('authStatus').textContent = data.error || 'Signup OTP verification failed';
+      finishAuth(data.user);
+    }
+    async function finishAuth(user) {
+      localStorage.setItem(USER_KEY, JSON.stringify(user));
+      localStorage.removeItem(PENDING_AUTH_EMAIL_KEY);
+      document.getElementById('loginBtn').classList.add('logged-in');
+      document.getElementById('loginLabel').textContent = getDisplayName(user);
+      document.getElementById('signupBtn').style.display = 'none';
+      document.getElementById('logoutBtn').style.display = '';
+      document.getElementById('authModal').classList.remove('open');
+      clearAuthForms();
+      await loadCart();
+      await loadHistory(true);
+      const redirectPath = new URLSearchParams(window.location.search).get('redirect');
+      if (redirectPath && redirectPath.startsWith('/')) {
+        window.location.href = redirectPath;
+      }
+    }
+
+    renderProducts('grabProducts', products.slice(0, 4));
+    renderProducts('popularProducts', products.slice(4));
+    document.body.addEventListener('click', event => {
+      const add = event.target.closest('[data-add]');
+      if (add) addToCart(add.dataset.add);
+    });
+    document.getElementById('cartBtn').onclick = () => {
+      try { requireUser(); } catch (err) { setStatus(err.message); openAuth('login'); return; }
+      document.getElementById('cartDrawer').classList.add('open');
+    };
+    document.getElementById('closeCart').onclick = () => document.getElementById('cartDrawer').classList.remove('open');
+    document.getElementById('emptyCart').onclick = () => {
+      clearCartInDb().catch(() => setStatus('Cart emptied locally. Backend not reachable.'));
+      cart = {};
+      renderCart();
+    };
+    document.getElementById('checkoutBtn').onclick = () => {
+      try { requireUser(); } catch (err) { setStatus(err.message); openAuth('login'); return; }
+      openPaymentModal();
+    };
+    document.getElementById('loginBtn').onclick = () => {
+      const user = getCurrentUser();
+      if (user && user.email) {
+        showHistorySection();
+        return;
+      }
+      openAuth('login');
+    };
+    document.getElementById('signupBtn').onclick = () => openAuth('signup');
+    document.getElementById('logoutBtn').onclick = logout;
+    document.getElementById('ordersBtn').onclick = () => {
+      try { requireUser(); } catch (err) { setStatus(err.message); openAuth('login'); return; }
+      showHistorySection();
+    };
+    document.getElementById('historyRailBtn').onclick = () => {
+      try { requireUser(); } catch (err) { setStatus(err.message); openAuth('login'); return; }
+      showHistorySection();
+    };
+    document.getElementById('historyServiceBtn').onclick = () => {
+      try { requireUser(); } catch (err) { setStatus(err.message); openAuth('login'); return; }
+      showHistorySection();
+    };
+    document.getElementById('closePayment').onclick = closePaymentModal;
+    document.getElementById('confirmPaymentBtn').onclick = () => {
+      placeOrder(selectedPaymentMethod).catch(err => {
+        document.getElementById('paymentStatus').textContent = err.message;
+      });
+    };
+    document.querySelectorAll('[data-payment-method]').forEach(button => {
+      button.onclick = () => setPaymentMethod(button.dataset.paymentMethod);
+    });
+    document.getElementById('closeAuth').onclick = () => document.getElementById('authModal').classList.remove('open');
+    document.getElementById('loginTab').onclick = () => setAuthMode('login');
+    document.getElementById('signupTab').onclick = () => setAuthMode('signup');
+    document.getElementById('loginSubmit').onclick = login;
+    document.getElementById('signupSubmit').onclick = signup;
+    document.getElementById('verifyLoginSubmit').onclick = verifyLoginOtp;
+    document.getElementById('verifySignupSubmit').onclick = verifySignupOtp;
+    document.getElementById('searchInput').addEventListener('input', event => {
+      const q = event.target.value.toLowerCase();
+      const results = products.filter(product => `${product.name} ${product.sub} ${product.deal}`.toLowerCase().includes(q));
+      renderProducts('grabProducts', results.slice(0, 4));
+      renderProducts('popularProducts', results.slice(4, 8));
+    });
+    document.querySelectorAll('[data-auth-required="true"]').forEach(link => {
+      link.addEventListener('click', event => {
+        event.preventDefault();
+        ensureLoggedInForService(link.getAttribute('href'));
+      });
+    });
+    loadUser();
+    loadCart();
+    loadHistory().catch(() => {});
+    const launchAuth = new URLSearchParams(window.location.search).get('auth');
+    if (launchAuth === 'login' || launchAuth === 'signup') openAuth(launchAuth);
+    document.getElementById('paymentModal').addEventListener('click', event => {
+      if (event.target.id === 'paymentModal') closePaymentModal();
+    });
+  </script>
+</body>
+</html>
