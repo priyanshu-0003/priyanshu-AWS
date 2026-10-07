@@ -1,0 +1,86 @@
+#!/bin/bash
+# ------------------------------------------------------------
+# Datadog Agent setup for the BACKEND server (Python app on PM2)
+#
+# Usage:
+#   sudo DD_API_KEY=<your_datadog_api_key> ./datadog-backend.sh
+#
+# Optional variables:
+#   DD_SITE      (default: datadoghq.com)
+#   DD_ENV       (default: prod)
+#   PM2_APP      (default: backend)  -> PM2 app name
+#   PM2_LOG_DIR  (default: /root/.pm2/logs)
+# ------------------------------------------------------------
+set -euo pipefail
+
+# ---- Settings ----
+DD_SITE="${DD_SITE:-datadoghq.com}"
+DD_ENV="${DD_ENV:-prod}"
+PM2_APP="${PM2_APP:-backend}"
+PM2_LOG_DIR="${PM2_LOG_DIR:-/root/.pm2/logs}"
+DD_CONF="/etc/datadog-agent/datadog.yaml"
+
+# ---- Checks ----
+if [ "$(id -u)" -ne 0 ]; then
+  echo "ERROR: Run this script as root (use sudo)." >&2
+  exit 1
+fi
+
+if [ -z "${DD_API_KEY:-}" ]; then
+  echo "ERROR: DD_API_KEY is not set." >&2
+  echo "Usage: sudo DD_API_KEY=<your_key> ./datadog-backend.sh" >&2
+  exit 1
+fi
+
+# ---- 1. Install Datadog Agent 7 ----
+echo ">>> Installing Datadog Agent (role:backend, env:$DD_ENV)..."
+DD_API_KEY="$DD_API_KEY" \
+DD_SITE="$DD_SITE" \
+DD_ENV="$DD_ENV" \
+DD_HOST_TAGS="role:backend" \
+bash -c "$(curl -L https://install.datadoghq.com/scripts/install_script_agent7.sh)"
+
+# ---- 2. Enable agent settings (only if not already present) ----
+echo ">>> Updating $DD_CONF ..."
+grep -q "^expvar_port" "$DD_CONF" || echo "expvar_port: 5002" >> "$DD_CONF"
+grep -q "^logs_enabled" "$DD_CONF" || echo "logs_enabled: true" >> "$DD_CONF"
+
+# ---- 3. Tell the agent which backend log files to collect ----
+echo ">>> Configuring PM2 log collection..."
+mkdir -p /etc/datadog-agent/conf.d/pm2_backend.d
+tee /etc/datadog-agent/conf.d/pm2_backend.d/conf.yaml > /dev/null <<LOGCONF
+logs:
+  - type: file
+    path: ${PM2_LOG_DIR}/${PM2_APP}-out.log
+    service: backend
+    source: python
+  - type: file
+    path: ${PM2_LOG_DIR}/${PM2_APP}-error.log
+    service: backend
+    source: python
+LOGCONF
+
+# ---- 4. Allow the dd-agent user to read PM2 logs ----
+echo ">>> Setting permissions for dd-agent..."
+if command -v setfacl >/dev/null 2>&1; then
+  # Safer: give only dd-agent access
+  setfacl -m u:dd-agent:x "$(dirname "$(dirname "$PM2_LOG_DIR")")" 2>/dev/null || true
+  setfacl -m u:dd-agent:x "$(dirname "$PM2_LOG_DIR")" 2>/dev/null || true
+  setfacl -R -m u:dd-agent:rx "$PM2_LOG_DIR" 2>/dev/null || true
+else
+  # Fallback: opens permissions for all users (less secure)
+  chmod o+x /root
+  chmod -R o+r "$PM2_LOG_DIR"
+fi
+
+# ---- 5. Restart and verify ----
+echo ">>> Restarting Datadog Agent..."
+systemctl restart datadog-agent
+sleep 5
+
+echo ">>> Agent status:"
+systemctl is-active datadog-agent
+datadog-agent status | grep -E "API Key|Last error" || true
+
+echo ""
+echo "Done. In Datadog open: Logs -> filter  service:backend"
