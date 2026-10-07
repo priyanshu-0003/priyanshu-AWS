@@ -1,0 +1,81 @@
+#!/bin/bash
+# ------------------------------------------------------------
+# Datadog Agent setup for the FRONTEND server (Nginx)
+#
+# Usage:
+#   sudo DD_API_KEY=<your_datadog_api_key> ./datadog-frontend.sh
+#
+# Optional variables:
+#   DD_SITE   (default: datadoghq.com)
+#   DD_ENV    (default: prod)
+# ------------------------------------------------------------
+set -euo pipefail
+
+# ---- Settings ----
+DD_SITE="${DD_SITE:-datadoghq.com}"
+DD_ENV="${DD_ENV:-prod}"
+DD_CONF="/etc/datadog-agent/datadog.yaml"
+
+# ---- Checks ----
+if [ "$(id -u)" -ne 0 ]; then
+  echo "ERROR: Run this script as root (use sudo)." >&2
+  exit 1
+fi
+
+if [ -z "${DD_API_KEY:-}" ]; then
+  echo "ERROR: DD_API_KEY is not set." >&2
+  echo "Usage: sudo DD_API_KEY=<your_key> ./datadog-frontend.sh" >&2
+  exit 1
+fi
+
+# ---- 1. Install Datadog Agent 7 ----
+echo ">>> Installing Datadog Agent (role:frontend, env:$DD_ENV)..."
+DD_API_KEY="$DD_API_KEY" \
+DD_SITE="$DD_SITE" \
+DD_ENV="$DD_ENV" \
+DD_HOST_TAGS="role:frontend" \
+bash -c "$(curl -L https://install.datadoghq.com/scripts/install_script_agent7.sh)"
+
+# ---- 2. Enable log collection (only if not already present) ----
+echo ">>> Updating $DD_CONF ..."
+grep -q "^logs_enabled" "$DD_CONF" || echo "logs_enabled: true" >> "$DD_CONF"
+
+# ---- 3. Allow dd-agent to read Nginx logs ----
+echo ">>> Setting permissions for dd-agent..."
+if getent group adm >/dev/null 2>&1; then
+  usermod -a -G adm dd-agent        # Ubuntu / Debian
+fi
+if getent group nginx >/dev/null 2>&1; then
+  usermod -a -G nginx dd-agent      # Amazon Linux / RHEL
+fi
+
+# ---- 4. Tell the agent which Nginx log files to collect ----
+echo ">>> Configuring Nginx log collection..."
+mkdir -p /etc/datadog-agent/conf.d/nginx.d
+tee /etc/datadog-agent/conf.d/nginx.d/conf.yaml > /dev/null <<'LOGCONF'
+logs:
+  - type: file
+    path: /var/log/nginx/access.log
+    service: frontend
+    source: nginx
+    log_processing_rules:
+      - type: exclude_at_match
+        name: exclude_elb_healthchecks
+        pattern: ELB-HealthChecker
+  - type: file
+    path: /var/log/nginx/error.log
+    service: frontend
+    source: nginx
+LOGCONF
+
+# ---- 5. Restart and verify ----
+echo ">>> Restarting Datadog Agent..."
+systemctl restart datadog-agent
+sleep 5
+
+echo ">>> Agent status:"
+systemctl is-active datadog-agent
+datadog-agent status | grep -E "API Key|Last error" || true
+
+echo ""
+echo "Done. In Datadog open: Logs -> filter  service:frontend"
